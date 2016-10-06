@@ -17,13 +17,13 @@ func calculate(first: Double, second: Double, op: String) {
     case operation[0]:
         print("Result: \(first) \(operation[0]) \(second) = \(first + second)")
     case operation[1]:
-        print("Result: \(first - second)")
+        print("Result: \(first) \(operation[1]) \(second) = \(first - second)")
     case operation[2]:
-        print("Result: \(first * second)")
+        print("Result: \(first) \(operation[2]) \(second) = \(first * second)")
     case operation[3]:
-        print("Result: \(first / second)")
+        print("Result: \(first) \(operation[3]) \(second) = \(first / second)")
     case operation[4]:
-        print("Result: \(first.truncatingRemainder(dividingBy: second))")
+        print("Result: \(first) \(operation[4]) \(second) = \(first.truncatingRemainder(dividingBy: second))")
     default:
         print("Error. Please try again")
     }
@@ -76,39 +76,47 @@ func getValidNum() -> Double {
 	var num: Double? = nil
 	repeat {
 		print("Please enter a valid number:")
-        let input = readLine(strippingNewline: true)
+        let input = readLine(strippingNewline: true)?.condensedWhitespace
+        checkExit(input: input!)
         num = Double(input!)
 	} while (num == nil)
 
 	return num!
 }
 
+func checkExit(input: String) {
+    if input == "exit" {
+        exit(0)
+    }
+}
+
 // This runs first
 while true {
 	print("Enter an expression separated by returns or a multi-operand operation (Type exit to exit):")
 
-	if let response = readLine(strippingNewline: true) {
+	if let response = readLine(strippingNewline: true)?.condensedWhitespace {
 		var input = response.components(separatedBy: " ")
 
 		// check if multiple arguments entered in first input (normal operation) or operation operation
 		if input.count == 1 {
-			if (input[0] == "exit") {
-				exit(0)
-			}
-
-			var first = Double(input[0]) 
+            checkExit(input: input[0])
+            
+			var first = Double(input[0])
 			if first == nil {
 				first = getValidNum()
 			}
 
-            var inputOp = readLine(strippingNewline: true)
+            var inputOp = readLine(strippingNewline: true)?.condensedWhitespace
             
 			while !(operation.contains(inputOp!)) {
+                checkExit(input: inputOp!)
+                
                 print("Must enter a valid operation: +, -, *, /, %:")
-                inputOp = readLine(strippingNewline: true)
+                inputOp = readLine(strippingNewline: true)?.condensedWhitespace
             }
             
-            var inputSecond = readLine(strippingNewline: true)
+            var inputSecond = (readLine(strippingNewline: true))?.condensedWhitespace
+            
             var second = Double(inputSecond!)
             if second == nil {
                 second = getValidNum()

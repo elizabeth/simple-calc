@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D08CC741DA70D9E00E57D8C /* String+CondenseWhitespace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D08CC731DA70D9E00E57D8C /* String+CondenseWhitespace.swift */; };
 		9D16E39F1DA4917E0044B7B7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D16E39E1DA4917E0044B7B7 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9D08CC731DA70D9E00E57D8C /* String+CondenseWhitespace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CondenseWhitespace.swift"; sourceTree = "<group>"; };
 		9D16E39B1DA4917E0044B7B7 /* SimpleCalc */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SimpleCalc; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D16E39E1DA4917E0044B7B7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -38,6 +40,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D08CC721DA70D4400E57D8C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9D08CC731DA70D9E00E57D8C /* String+CondenseWhitespace.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		9D16E3921DA4917E0044B7B7 = {
 			isa = PBXGroup;
 			children = (
@@ -57,6 +67,7 @@
 		9D16E39D1DA4917E0044B7B7 /* SimpleCalc */ = {
 			isa = PBXGroup;
 			children = (
+				9D08CC721DA70D4400E57D8C /* Extensions */,
 				9D16E39E1DA4917E0044B7B7 /* main.swift */,
 			);
 			path = SimpleCalc;
@@ -120,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D08CC741DA70D9E00E57D8C /* String+CondenseWhitespace.swift in Sources */,
 				9D16E39F1DA4917E0044B7B7 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,6 +262,7 @@
 				9D16E3A41DA4917E0044B7B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
