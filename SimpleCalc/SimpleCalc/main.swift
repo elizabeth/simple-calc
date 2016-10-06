@@ -8,83 +8,89 @@
 
 import Foundation
 
+private let operation = ["+", "-", "*", "/", "%"]
+private let multiOperation = ["count", "avg", "fact"]
+
 // calculate and print the result of the operation
 func calculate(first: Double, second: Double, op: String) {
     switch op {
-        case "+":
-            print("Result: \(first + second)")
-        case "-":
-            print("Result: \(first - second)")
-        case "*":
-            print("Result: \(first * second)")
-        case "/":
-            print("Result: \(first / second)")
-        case "%":
-            print("Result: \(first.truncatingRemainder(dividingBy: second))")
-        default:
-            print("Must enter a valid operation: +, -, *, /, %")
+    case operation[0]:
+        print("Result: \(first) \(operation[0]) \(second) = \(first + second)")
+    case operation[1]:
+        print("Result: \(first - second)")
+    case operation[2]:
+        print("Result: \(first * second)")
+    case operation[3]:
+        print("Result: \(first / second)")
+    case operation[4]:
+        print("Result: \(first.truncatingRemainder(dividingBy: second))")
+    default:
+        print("Error. Please try again")
     }
 }
 
-func multiOperation(array: Array<String>) {
+func calculateMulti(array: Array<String>) {
     let operand = array[array.count - 1]
     let numLength = array.count - 1;
     
-    switch operand {
-        case "count":
-            print("Result: \(numLength)")
-        case "avg":
-            var avg = 0
-            
-            for i in 0...<numLength {
-                avg += Int(array[i])!
+    operate: switch operand {
+    case multiOperation[0]:
+        print("Result: \(numLength)")
+    case multiOperation[1]:
+        var avg: Double = 0
+        
+        for i in 0..<numLength {
+            guard let num = Double(array[i]) else {
+                print("Must enter valid numbers. Please try again")
+                break operate
             }
-    
-            print("Result: \(avg/(numLength))")
-        case "fact":
-            let first = Int(array[0])!
-            if first == nil{
-            	print("Factorial number must be an integer") 
-            } else if numLength > 1 {    
-                print("Factorial can only accept one number"  
-            } else if first < 0 {
-                print("Factorial number must be 0 or greater")
-            } else if first == 0 {
-            	print("Result: 1")
-            } else {
-                var result = first
-                var temp = first - 1
-                while temp > 0 {
-                    result = result * temp
-
-                    temp = temp - 1
-                }
-
-                print("Result: \(result)")
+            avg += num
+        }
+        print("Result: \(avg/Double(numLength))")
+    case multiOperation[2]:
+        let first: Int? = Int(array[0])
+        if first == nil{
+            print("Factorial number must be an integer")
+        } else if numLength > 1 {
+            print("Factorial can only accept one number")
+        } else if first! < 0 {
+            print("Factorial number must be 0 or greater")
+        } else if first == 0 {
+            print("Result: 1")
+        } else {
+            var result = first!
+            var temp = first! - 1
+            while temp > 0 {
+                result = result * temp
+                temp = temp - 1
             }
-        default:
-        	print("Must enter a valid operation: count, avg, fact")
+
+            print("Result: \(result)")
+        }
+    default:
+        print("Must enter valid a valid operation: count, avg, fact. Please try again")
     }
 }
 
 func getValidNum() -> Double {
-	var num: T? = nil
-	do {
-		print("Must enter a valid number")
-		num = readLine(strippingNewLine: true)!
+	var num: Double? = nil
+	repeat {
+		print("Please enter a valid number:")
+        let input = readLine(strippingNewline: true)
+        num = Double(input!)
 	} while (num == nil)
 
-	return Double(num)
+	return num!
 }
 
 // This runs first
 while true {
-	print("Enter an expression separated by returns or a multi-operand operation/nType exit to exit:")
+	print("Enter an expression separated by returns or a multi-operand operation (Type exit to exit):")
 
-	if let response = readLine(strippingNewLine: true) {
+	if let response = readLine(strippingNewline: true) {
 		var input = response.components(separatedBy: " ")
 
-		// check if multiple arguments entered in first input (normal operation) or multioperand operation
+		// check if multiple arguments entered in first input (normal operation) or operation operation
 		if input.count == 1 {
 			if (input[0] == "exit") {
 				exit(0)
@@ -92,25 +98,27 @@ while true {
 
 			var first = Double(input[0]) 
 			if first == nil {
-				first = getValidNum
+				first = getValidNum()
 			}
 
-			if let operation = readLine(strippingNewline: true) {
-				if let inputSecond = readLine(strippingNewLine: true) {
-					guard var second = Double(inputSecond) if second == nil {
-						second = getValidNum
-					}
-					
-					calculate(first, second, operation)
-				} else {
-					print("Please enter a number")
-				}
-			} else {
-				print("Please enter an operation")
-				// 
-			}
+            var inputOp = readLine(strippingNewline: true)
+            
+			while !(operation.contains(inputOp!)) {
+                print("Must enter a valid operation: +, -, *, /, %:")
+                inputOp = readLine(strippingNewline: true)
+            }
+            
+            var inputSecond = readLine(strippingNewline: true)
+            var second = Double(inputSecond!)
+            if second == nil {
+                second = getValidNum()
+            }
+                
+            calculate(first: first!, second: second!, op: inputOp!)
 		} else {
-			multiOperation(input)
+			calculateMulti(array: input)
 		}
 	}
+    
+    print()
 }
