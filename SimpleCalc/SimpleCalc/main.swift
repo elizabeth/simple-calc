@@ -8,9 +8,62 @@
 
 import Foundation
 
-print("Enter an expression separated by returns or a multi-operand operation:")
+// calculate and print the result of the operation
+func calculate(first: Double, second: Double, op: String) {
+    switch op {
+        case "+":
+            print("Result: \(first + second)")
+        case "-":
+            print("Result: \(first - second)")
+        case "*":
+            print("Result: \(first * second)")
+        case "/":
+            print("Result: \(first / second)")
+        case "%":
+            print("Result: \(first.truncatingRemainder(dividingBy: second))")
+        default:
+            print("Must enter a valid operation")
+    }
+}
 
-var input = split(response!) {$0 == " "}
+func multiOperation(array: Array<String>) {
+    let operand = array[array.count - 1]
+    let numLength = array.count - 2;
+    
+    switch operand {
+        case "count":
+            print("Result: \(numLength)")
+        case "avg":
+            var avg = 0
+            
+            for i in 0...numLength {
+                avg += Int(array[i])!
+            }
+    
+            print("Result: \(avg)")
+        case "fact":
+            let first = Int(array[0])
+            if (numLength == 1) {
+                print("Factorial can only accept one number")
+            } else if first! < 0 {
+                print("Factorial number must be 0 or greater")
+            } else {
+                guard let first = Int(array[0]) else {
+                    print("Factorial number must be an integer")
+                    exit(0)
+                }
+            
+                var result = first
+                var temp = first
+                repeat {
+                    temp = temp - 1
+                    result = result * first
+                } while (temp > 0)
+            }
+    }
+}
+
+print("Enter an expression separated by returns or a multi-operand operation:")
 
 if let response = readLine(stripNewLine: true)! {
 	var input = split(response!) {$0 == " "}
@@ -42,68 +95,13 @@ if let response = readLine(stripNewLine: true)! {
 	} else {
 		multiOperation(input)
 	}
+} else {
+    print("Nothing")
 }
 
-exit()
+exit(0)
 
-// calculate and print the result of the operation
-func calculate(first: Double, second: Double, op: String) {
-	switch op (
-		case "+": 
-			print("Result: \(first + second)")
-		case "-":
-			print("Result: \(first - second)")
-		case "*":
-			print("Result: \(first * second)")
-		case "/":
-			print("Result: \(first / second")
-		case "%":
-			print("Result: \(first % second")
-		default:
-			print("Must enter a valid operation")
-	)
-}
 
-func multiOperation(array: Array) {
-	let operand = array[array.count() - 1]
-	var numLength = array.count - 2;
-
-	switch operand {
-		case: "count":
-			print("Result: \(numLength)")
-		case: "avg":
-			var avg = 0;
-			
-			for i = 0; i <= numLength; i++ {
-				avg += array[i]
-			}
-
-			print("Result: \(avg)")
-		case "fact"
-			var first = array[0]
-			if (numLength == 1) {
-				print("Factorial can only accept one number")
-			} elif first < 0 {
-				print("Factorial number must be 0 or greater")
-			} else {
-				guard let first = array[0].toInt() else {
-					print("Factorial number must be an integer")
-					exit()
-				}
-
-				var result = first;
-				do {
-					first = first - 1
-					result = result * first
-				} while (first > 0)
-	}
-}
-
-func invalidInput(msg: String) {
-	guard let first = Double(input[0]) else {
-		print("msg")
-	}	
-}
 
 //
 //let num = UInt.init(response)!
