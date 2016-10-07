@@ -31,15 +31,22 @@ func calculate(first: Double, second: Double, op: String) {
 
 func calculateMulti(array: Array<String>) {
     let operand = array[array.count - 1]
-    let numLength = array.count - 1;
+    let numLength = array.count - 2;
     
     operate: switch operand {
     case multiOperation[0]:
+        for i in 1..<numLength + 1 {
+            guard Double(array[i]) != nil else {
+                print("Must enter valid numbers. Please try again")
+                break operate
+            }
+        }
+        
         print("Result: \(numLength)")
     case multiOperation[1]:
         var avg: Double = 0
         
-        for i in 0..<numLength {
+        for i in 1..<numLength + 1 {
             guard let num = Double(array[i]) else {
                 print("Must enter valid numbers. Please try again")
                 break operate
@@ -48,13 +55,13 @@ func calculateMulti(array: Array<String>) {
         }
         print("Result: \(avg/Double(numLength))")
     case multiOperation[2]:
-        let first: Int? = Int(array[0])
+        let first: Int? = Int(array[1])
         if first == nil{
-            print("Factorial number must be an integer")
+            print("Factorial number must be an integer. Please try again")
         } else if numLength > 1 {
-            print("Factorial can only accept one number")
+            print("Factorial can only accept one number. Please try again")
         } else if first! < 0 {
-            print("Factorial number must be 0 or greater")
+            print("Factorial number must be 0 or greater. Please try again")
         } else if first == 0 {
             print("Result: 1")
         } else {
@@ -72,61 +79,26 @@ func calculateMulti(array: Array<String>) {
     }
 }
 
-func getValidNum() -> Double {
-	var num: Double? = nil
-	repeat {
-		print("Please enter a valid number:")
-        let input = readLine(strippingNewline: true)?.condensedWhitespace
-        checkExit(input: input!)
-        num = Double(input!)
-	} while (num == nil)
+let arguments = CommandLine.arguments
 
-	return num!
-}
-
-func checkExit(input: String) {
-    if input == "exit" {
+// check if multiple arguments entered normal operation or multi operation
+if arguments.count == 4 && operation.contains(arguments[2]) {
+    var operation = arguments[2]
+            
+    guard let first = Double(arguments[1]) else {
+        print("Invalid arguments please try again")
         exit(0)
     }
-}
-
-// This runs first
-while true {
-	print("Enter an expression separated by returns or a multi-operand operation (Type exit to exit):")
-
-	if let response = readLine(strippingNewline: true)?.condensedWhitespace {
-		var input = response.components(separatedBy: " ")
-
-		// check if multiple arguments entered in first input (normal operation) or operation operation
-		if input.count == 1 {
-            checkExit(input: input[0])
-            
-			var first = Double(input[0])
-			if first == nil {
-				first = getValidNum()
-			}
-
-            var inputOp = readLine(strippingNewline: true)?.condensedWhitespace
-            
-			while !(operation.contains(inputOp!)) {
-                checkExit(input: inputOp!)
-                
-                print("Must enter a valid operation: +, -, *, /, %:")
-                inputOp = readLine(strippingNewline: true)?.condensedWhitespace
-            }
-            
-            var inputSecond = (readLine(strippingNewline: true))?.condensedWhitespace
-            
-            var second = Double(inputSecond!)
-            if second == nil {
-                second = getValidNum()
-            }
-                
-            calculate(first: first!, second: second!, op: inputOp!)
-		} else {
-			calculateMulti(array: input)
-		}
-	}
     
-    print()
+    guard let second = Double(arguments[3]) else {
+        print("Invalid arguments please try again")
+        exit(0)
+    }
+    
+    calculate(first: first, second: second, op: operation)
+} else if multiOperation.contains(arguments[arguments.count-1]) {
+    calculateMulti(array: arguments)
+} else {
+    print("Invalid arguments please try again")
 }
+
