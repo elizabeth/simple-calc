@@ -35,6 +35,12 @@ func calculateMulti(array: Array<String>) {
     
     operate: switch operand {
     case multiOperation[0]:
+        for i in 0..<numLength {
+            guard Double(array[i]) != nil else {
+                print("Must enter valid numbers. Please try again")
+                break operate
+            }
+        }
         print("Result: \(numLength)")
     case multiOperation[1]:
         var avg: Double = 0
